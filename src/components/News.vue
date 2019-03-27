@@ -10,10 +10,10 @@
 
 <script>
   export default {
-    name: 'aaa',computed: {
+    name: "NewsTest",
+    computed: {
       username () {
-        // 我们很快就会看到 `params` 是什么
-        return this.$route.params.username
+        return this.$route.params.username;
       }
     },
     data() {
@@ -22,9 +22,13 @@
           '111111111',
           '222222222',
           '333333333',
-          '444444444'
+          '444444444',
         ]
       }
     }
   }
 </script>
+
+<style scoped>
+
+</style>
