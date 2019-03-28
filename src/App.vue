@@ -10,6 +10,11 @@
       <li><router-link to="/settings">settings</router-link></li>
       <li><router-link to="/settings/emails">/settings/emails</router-link></li>
       <li><router-link to="/settings/profile">/settings/profile</router-link></li>
+      <li><router-link to="/a">/a</router-link></li>
+      <li><router-link to="/b">/b</router-link></li>
+      <li><router-link to="/param/654">/param/654</router-link></li>
+      <li><router-link to="/func?q=951">/func?q=951</router-link></li>
+      <li><router-link to="/lazy">/lazy</router-link></li>
     </ul>
 
     <div style="cursor: pointer;" @click="navigate">编程式的导航</div>
@@ -25,6 +30,7 @@
     <!--</div>-->
     <div>
       <router-view></router-view>
+      <router-view name="param1"></router-view>
       <router-view name="a"></router-view>
       <router-view name="b"></router-view>
     </div>

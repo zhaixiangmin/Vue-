@@ -10,9 +10,17 @@ import Baz from './components/Baz'
 import UserSettings from './components/UserSettings'
 import UserEmailsSubscriptions from './components/UserEmailsSubscriptions'
 import UserProfilePreview from './components/UserProfilePreview'
+import A from './components/A'
+import B from './components/B'
+import Param from './components/Param'
+import Param1 from './components/Param1'
+import Func from './components/Func'
+// import Lazy from './components/Lazy'
 import Error from './components/Error'
+const Lazy = () => import('./components/Lazy.vue');
 
 export default {
+  mode: 'history',
   routes: [
     { path: '/', components: {
         default: Foo,
@@ -21,7 +29,14 @@ export default {
       }
     },
     { path: '/home', component: Home },
-    { path: '/news', component: News },
+    { path: '/news',
+      component: News,
+      beforeEnter: (to, from, next) => {
+        console.log('beforeEnter to', to);
+        console.log('beforeEnter from', from);
+        next();
+      }
+    },
     // 动态路径参数 以冒号开头
     // 命名路由
     { name: 'user', path: '/user/:id', component: User,
@@ -52,7 +67,12 @@ export default {
       children: [
         {
           path: 'emails',
-          component: UserEmailsSubscriptions
+          component: UserEmailsSubscriptions,
+          meta: {
+            requiresAuth: true,
+            test: 'test',
+            test1: 'test1',
+          }
         },
         {
           path: 'profile',
@@ -62,6 +82,36 @@ export default {
           }
         },
       ]
+    },
+    // { path: '/a', redirect: '/b', component: A },
+    { path: '/a', component: A, alias: '/b' },
+    { path: '/b', component: B },
+    // { path: '/param/:id', component: Param, props: true },
+    // 路由组件传参
+    // 函数模式
+    { path: '/param/:id', components: {
+        default: Param,
+        param1: Param1
+      },
+      props: {
+        default: true,
+        sidebar: true
+      }
+    },
+    {
+      path: '/func',
+      component: Func,
+      props: (route) => (
+        {
+          query: route.query.q
+        }
+      )
+    },
+    {
+      path: '/lazy',
+      name: 'lazy',
+      component: Lazy
+      // component: resolve => require(['./components/Lazy'], resolve)
     },
 
     // 捕获所有路由或 404 Not found 路由
