@@ -2,19 +2,20 @@
   <div id="app">
     {{ msg }}
     <ul>
-      <li><router-link to="/home">主页</router-link></li>
-      <li><router-link to="/news">新闻</router-link></li>
+      <li><router-link to="/home" tag="span">主页</router-link></li>
+      <router-link to="/news" tag="li"><a>新闻</a></router-link>
       <!--this.$router.push 规则也适用于 router-link 组件的 to 属性-->
       <li><router-link :to="{ name: 'user', params: { id: 'private' } }">to测试</router-link></li>
-      <li><router-link to="/user/123?name=456">用户</router-link></li>
-      <li><router-link to="/settings">settings</router-link></li>
-      <li><router-link to="/settings/emails">/settings/emails</router-link></li>
+      <li><router-link active-class="test2-active" to="/user/123?name=456">用户</router-link></li>
+      <li><router-link router-link-exact-active="test2-exact-active" to="/settings" replace>settings</router-link></li>
+      <li><router-link to="/settings/emails" exact>/settings/emails</router-link></li>
       <li><router-link to="/settings/profile">/settings/profile</router-link></li>
       <li><router-link to="/a">/a</router-link></li>
-      <li><router-link to="/b">/b</router-link></li>
+      <li><router-link to="b" append>/b</router-link></li>
       <li><router-link to="/param/654">/param/654</router-link></li>
       <li><router-link to="/func?q=951">/func?q=951</router-link></li>
-      <li><router-link to="/lazy">/lazy</router-link></li>
+      <!--event 声明可以用来触发导航的事件。可以是一个字符串或是一个包含字符串的数组。-->
+      <li><router-link to="/lazy" event="mouseover">/lazy</router-link></li>
     </ul>
 
     <div style="cursor: pointer;" @click="navigate">编程式的导航</div>

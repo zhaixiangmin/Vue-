@@ -20,7 +20,11 @@ import Error from './components/Error'
 const Lazy = () => import('./components/Lazy.vue');
 
 export default {
-  mode: 'history',
+  // mode: 'history',
+  // 设置 链接激活时使用的 CSS 类名
+  // linkActiveClass: 'test-active',
+  // 配置 当链接被精确匹配的时候应该激活的 class
+  // linkExactActiveClass: 'test-exact-active',
   routes: [
     { path: '/', components: {
         default: Foo,
