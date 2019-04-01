@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Vuex from 'vuex'
+// import { mapState } from 'vuex'
 
 import App from './App.vue'
 import routerConfig from './router.config'
@@ -9,8 +11,50 @@ Vue.config.productionTip = false;
 Vue.use(VueRouter);
 var router = new VueRouter(routerConfig);
 
+Vue.use(Vuex);
+const store = new Vuex.Store({
+  state: {
+    count: 0,
+    todos: [
+      { id: 1, text: 'text1', done: true },
+      { id: 2, text: 'text2', done: false },
+    ]
+  },
+  mutations: {
+    increment (state) {
+      state.count++;
+    }
+  },
+  getters: {
+    doneTodos: state => {
+      return state.todos.filter(todo => todo.done);
+    },
+    doneTodoCount: (state, getters) => {
+      return getters.doneTodos.length;
+    },
+    getTodoById: (state) => (id) => {
+      return state.todos.find(todo => todo.id == id);
+    }
+  }
+});
+
+store.commit('increment');
+console.log(store.state.count);
+
 new Vue({
   router,
+  store,
+  data: {
+    localCount: 3
+  },
+  // computed: mapState({
+  //   count: state => state.count,
+  //   // 等同于 'state => state.count'
+  //   countAlias: 'count',
+  //   countPlusLocalState (state) {
+  //     return state.count + this.localCount;
+  //   }
+  // }),
   render: h => h(App),
 }).$mount('#app');
 
