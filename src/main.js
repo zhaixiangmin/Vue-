@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 // import { mapState } from 'vuex'
+import { SOME_MUTATION } from './js/mutation-types'
 
 import App from './App.vue'
 import routerConfig from './router.config'
@@ -23,7 +24,24 @@ const store = new Vuex.Store({
   mutations: {
     increment (state) {
       state.count++;
-    }
+    },
+    increment2 (state, n) {
+      state.count += n;
+    },
+    increment3 (state, payload) {
+      console.log('mutations increment3 payload', payload)
+      state.count += payload.amount;
+    },
+    ['SOME_MUTATION'] (state) {
+      console.log('mutations SOME_MUTATION', SOME_MUTATION);
+      state.count += 50;
+    },
+    mu1 (state) {
+      console.log('mu1')
+    },
+    mu2 (state) {
+      console.log('mu2')
+    },
   },
   getters: {
     doneTodos: state => {
@@ -35,10 +53,60 @@ const store = new Vuex.Store({
     getTodoById: (state) => (id) => {
       return state.todos.find(todo => todo.id == id);
     }
+  },
+  actions: {
+    action (context) {
+      context.commit('increment');
+    },
+    action2 ({commit}) {
+      commit('increment');
+    },
+    action3 ({commit}) {
+      setTimeout( () => {
+        commit('increment');
+      }, 1000);
+    },
+    actionA ({ commit }) {
+      return new Promise((resolve, reject) => {
+        setTimeout( () => {
+          commit('mu1');
+          resolve();
+        }, 1000);
+      });
+    },
+    actionB ({ dispatch, commit }) {
+      return dispatch('actionA').then(() => {
+        commit('mu2')
+      });
+    },
+    getData () {
+
+    },
+    async actionC ({ commit }) {
+      async function gotData() {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve();
+          }, 1000);
+        });
+      }
+      commit('mu1', await gotData());
+    },
+    async actionD ({ dispatch, commit }) {
+      dispatch('actionC'); // 等待 actionA 完成
+      commit('mu2');
+    }
   }
 });
 
-store.commit('increment');
+// store.commit('increment');
+// store.commit('increment2', 10);
+// store.commit('increment3', {
+// store.commit({
+//   type: 'increment3',
+//   amount: 30
+// });
+store.commit(SOME_MUTATION);
 console.log(store.state.count);
 
 new Vue({
