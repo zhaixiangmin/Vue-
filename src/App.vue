@@ -16,6 +16,7 @@
       <li><router-link to="/func?q=951">/func?q=951</router-link></li>
       <!--event 声明可以用来触发导航的事件。可以是一个字符串或是一个包含字符串的数组。-->
       <li><router-link to="/lazy" event="mouseover">/lazy</router-link></li>
+      <li><router-link to="/module1">/module1</router-link></li>
     </ul>
 
     <div style="cursor: pointer;" @click="navigate">编程式的导航</div>

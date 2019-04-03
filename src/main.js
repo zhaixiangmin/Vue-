@@ -7,6 +7,8 @@ import { SOME_MUTATION } from './js/mutation-types'
 import App from './App.vue'
 import routerConfig from './router.config'
 
+import moduleA from './module/moduleA'
+
 Vue.config.productionTip = false;
 
 Vue.use(VueRouter);
@@ -96,6 +98,9 @@ const store = new Vuex.Store({
       dispatch('actionC'); // 等待 actionA 完成
       commit('mu2');
     }
+  },
+  modules: {
+    moduleA: moduleA
   }
 });
 

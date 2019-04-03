@@ -18,6 +18,7 @@ import Func from './components/Func'
 // import Lazy from './components/Lazy'
 import Error from './components/Error'
 const Lazy = () => import('./components/Lazy.vue');
+import Module1 from './components/module/Module1'
 
 export default {
   // mode: 'history',
@@ -115,6 +116,12 @@ export default {
       path: '/lazy',
       name: 'lazy',
       component: Lazy
+      // component: resolve => require(['./components/Lazy'], resolve)
+    },
+    {
+      path: '/module1',
+      name: 'module1',
+      component: Module1
       // component: resolve => require(['./components/Lazy'], resolve)
     },
 
